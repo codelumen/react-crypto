@@ -234,7 +234,7 @@ export class SC {
         
         try {
             let totalRewards = await V2_getTotalRewardsValue(account, 2678400);
-            return Math.trunc(totalRewards);
+            return Math.trunc(((totalRewards/(10**18))* 100) / 100);
         } catch(e) { throw e }
     }
 }
