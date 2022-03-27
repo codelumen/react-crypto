@@ -1,0 +1,18 @@
+{
+  "MENU": {
+    "PRODUCT": "Our products",
+    "FINANCE": "Finance",
+    "MARKETPLACE": "Marketplace",
+    "COMICS": "Comics",
+    "MEMES": "Memes",
+    "WHITEPAPER": "Whitepaper",
+    "CONTACTS": "Contacts"
+  },
+  "LANG": {
+    "ENG": "ENG",
+    "RUS": "RUS"
+  },
+  "BUTTON": {
+    "TITLE": "Get Whitelisted"
+  }
+} 

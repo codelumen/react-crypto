@@ -1,0 +1,18 @@
+{
+  "MENU": {
+    "PRODUCT": "Наши продукты",
+    "FINANCE": "Финансы",
+    "MARKETPLACE": "Маркетплейс",
+    "COMICS": "Комиксы",
+    "MEMES": "Мемы",
+    "WHITEPAPER": "Whitepaper",
+    "CONTACTS": "Контакты"
+  },
+  "LANG": {
+    "ENG": "АНГ",
+    "RUS": "РУС"
+  },
+  "BUTTON": {
+    "TITLE": "Записаться"
+  }
+} 
