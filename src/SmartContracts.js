@@ -85,13 +85,17 @@ export class SC {
         try {
             if (version === "1") {
                 let approvedRaw = await SC.tokenContract.allowance(SC.stakingContract.address, account);
-                let approved = parseInt(approvedRaw._hex, '16');
-                if (approved) return true;
+                if (approvedRaw) {
+                    let approved = parseInt(approvedRaw._hex, '16');
+                    if (approved) return true;
+                }
                 await SC.approve(ethers.BigNumber.from(Math.round(SC.dailyDistribution * SC.coefficient)));
             } else if (version === "2") {
                 let approvedRaw = await SC.tokenContract.allowance(SC.stakingContractV2.address, account);
-                let approved = parseInt(approvedRaw._hex, '16');
-                if (approved) return true;
+                if (approvedRaw) {
+                    let approved = parseInt(approvedRaw._hex, '16');
+                    if (approved) return true;
+                }
                 await SC.approveV2(ethers.BigNumber.from(Math.round(SC.dailyDistribution * SC.coefficient)));
             }
             return true;
