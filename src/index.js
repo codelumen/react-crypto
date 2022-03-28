@@ -6,10 +6,10 @@ import reportWebVitals from "./reportWebVitals";
 import "./i18n/i18n";
 import { Web3ReactProvider } from '@web3-react/core';
 import Web3 from 'web3';
-import { MetaMaskProvider } from './hooks/MetaMask';
+import { MetaMask } from './hooks/MetaMask';
 import './polyfill';
 import { Buffer } from 'buffer';
-import { WalletConnectProvider } from "./hooks/WalletConnect";
+import { WalletConnect } from "./hooks/WalletConnect";
 
 
 const getLibrary = (provider, connector) => {
@@ -20,13 +20,13 @@ const getLibrary = (provider, connector) => {
 ReactDOM.render(
     <React.StrictMode>
         <Web3ReactProvider getLibrary={ getLibrary }>
-            <WalletConnectProvider>
-                <MetaMaskProvider>
+            <WalletConnect>
+                <MetaMask>
                     <Suspense fallback={<span>Loading...</span>}>
                         <App/>
                     </Suspense>
-                </MetaMaskProvider>
-            </WalletConnectProvider>
+                </MetaMask>
+            </WalletConnect>
         </Web3ReactProvider>
     </React.StrictMode>,
     document.getElementById("root")

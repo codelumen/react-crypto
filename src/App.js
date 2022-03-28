@@ -11,6 +11,7 @@ import { useMetaMask } from './hooks/MetaMask';
 import { useWalletConnect } from "./hooks/WalletConnect";
 import { StakePopUp } from "./components/PopUp/Stake";
 import { SC } from './SmartContracts';
+import { walletConnectProvider } from "./components/Connections/WalletConnectConnector";
 
 
 const StyledAppWrapper = styled.div`
@@ -138,6 +139,7 @@ function App() {
     let [ account, setAccount ] = useState(false);
     let [ active, setActive ] = useState(false);
     let [ stakingVersion, setStakingVersion ] = useState("1");
+    let [ provider, setProvider ] = useState(null);
 
     let [ update, setUpdate ] = useState(false);
 
@@ -145,14 +147,14 @@ function App() {
     if (Maccount && !account) {
         setAccount(Maccount);
         setNeedToApprove(true);
+        setProvider(walletConnectProvider);
     } else if (Waccount && !account) {
         setAccount(Waccount);
         setNeedToApprove(true);
+        setProvider(window.ethereum);
     }
 
-    if (MisActive && !active) {
-        setActive(true);
-    } else if (WisActive && !active) {
+    if ((MisActive || WisActive) && !active) {
         setActive(true);
     }
 
@@ -197,6 +199,7 @@ function App() {
                     onStake={ () => { setStakePopUpVisibility(true); setStakingVersion("1") } }
                     onStakeV2={ () => { setStakePopUpVisibility(true); setStakingVersion("2") } }
                     needToApprove={ needToApprove }
+                    provider={ provider }
                 />
             </StyledAppContainer>
             <div>

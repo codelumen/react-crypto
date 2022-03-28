@@ -73,8 +73,8 @@ export class SC {
     static inStake = 0;
     static inStakeV2 = 0;
 
-    static async init(version, account) {
-        const provider = new ethers.providers.Web3Provider(window.ethereum), signer = provider.getSigner();
+    static async init(_provider, version, account) {
+        const provider = new ethers.providers.Web3Provider(_provider), signer = provider.getSigner();
 
         if (!SC.tokenContract) {
             SC.tokenContract = new ethers.Contract(SC.config.tokenContractAddress, tokenABI, signer);
@@ -234,7 +234,7 @@ export class SC {
         
         try {
             let totalRewards = await V2_getTotalRewardsValue(account, 2678400);
-            return Math.trunc(((totalRewards/(10**18))* 100) / 100);
+            return Math.trunc(((totalRewards / (10 ** 18)) * 100) / 100);
         } catch(e) { throw e }
     }
 }

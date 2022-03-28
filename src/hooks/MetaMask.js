@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useWeb3React } from '@web3-react/core';
-import { injectedMetaMask } from '../components/wallet/MetaMaskConnector';
+import { injectedMetaMask } from '../components/Connections/MetaMaskConnector';
 
 
 const MetaMaskContext = React.createContext(null);
 
 
-export const MetaMaskProvider = ({ children }) => {
+export const MetaMask = ({ children }) => {
     const web3 = useWeb3React();
     const Mactivate = web3.activate;
     const Maccount = web3.account;

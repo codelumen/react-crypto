@@ -52,7 +52,8 @@ export const Finance = ({
     onStake,
     onStakeV2,
     needToApprove,
-    update
+    update,
+    provider
 }) => {
     const { t } = useTranslation();
 
@@ -87,6 +88,7 @@ export const Finance = ({
                     onStake={ handleStake }
                     needToApprove={ needToApprove }
                     update={ update }
+                    provider={ provider }
                 />
                 <StakeItem
                     key="2"
@@ -98,6 +100,7 @@ export const Finance = ({
                     onStake={ handleStake2 }
                     needToApprove={ needToApprove }
                     update={ update }
+                    provider={ provider }
                 />
             </StyledStakeItemContainer>
         </div>

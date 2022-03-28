@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useWeb3React } from '@web3-react/core';
-import { walletConnect } from '../components/wallet/WalletConnectConnector';
+import { walletConnect } from '../components/Connections/WalletConnectConnector';
 
 
 const WalletConnectContext = React.createContext(null);
 
 
-export const WalletConnectProvider = ({ children }) => {
+export const WalletConnect = ({ children }) => {
     const web3 = useWeb3React();
     const Wactivate = web3.activate;
     const Waccount = web3.account;
