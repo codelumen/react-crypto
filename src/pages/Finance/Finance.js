@@ -38,6 +38,7 @@ const StyledStakeItemContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 32px;
+  align-items: flex-start;
 `;
 
 const StyledHeaderDevider = styled(HeaderDevider)`

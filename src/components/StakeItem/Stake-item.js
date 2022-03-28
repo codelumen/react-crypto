@@ -206,7 +206,11 @@ export const StakeItem = ({
       }
       
       setCanHarvest(earnedRaw > 0);
-      setCanWithdraw(version === "1" ? inStake > 0 && !((holdingTime * 1000) >= (Date.now() - (userLastStackedTime * 1000))) : true)
+      if (inStake > 0) {
+        setCanWithdraw(version === "1" ? !((holdingTime * 1000) >= (Date.now() - (userLastStackedTime * 1000))) : true);
+      } else {
+        setCanWithdraw(false);
+      }
     }, [ account, version, inStake ]);
 
     const approve = useCallback(async () => {

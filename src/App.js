@@ -140,18 +140,21 @@ function App() {
     let [ active, setActive ] = useState(false);
     let [ stakingVersion, setStakingVersion ] = useState("1");
     let [ provider, setProvider ] = useState(null);
+    let [ walletType, setWalletType ] = useState(null);
 
     let [ update, setUpdate ] = useState(false);
 
-
-    if (Maccount && !account) {
-        setAccount(Maccount);
-        setNeedToApprove(true);
-        setProvider(walletConnectProvider);
-    } else if (Waccount && !account) {
-        setAccount(Waccount);
-        setNeedToApprove(true);
-        setProvider(window.ethereum);
+    if (walletType && (Maccount || Waccount) && !account) {
+        if (walletType === 'MetaMask') {
+            setAccount(Maccount);
+            setNeedToApprove(true);
+            setProvider(window.ethereum);
+            console.log('eth');
+        } else if (walletType === 'WalletConnect') {
+            setAccount(Waccount);
+            setNeedToApprove(true);
+            setProvider(walletConnectProvider);
+        }
     }
 
     if ((MisActive || WisActive) && !active) {
@@ -182,8 +185,10 @@ function App() {
                 async wallet => {
                     if (wallet === 'MetaMask') {
                         await Mconnect();
+                        setWalletType('MetaMask');
                     } else if (wallet === 'WalletConnect') {
                         await Wconnect();
+                        setWalletType('WalletConnect');
                     }
                 }
             }></WalletConnectPopUp>
