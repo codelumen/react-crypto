@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Navigation } from "./components";
 import { Finance } from "./pages/Finance/Finance";
 import styled from "styled-components";
@@ -196,11 +196,10 @@ function App() {
                 async wallet => {
                     if (wallet === 'MetaMask') {
                         await Mconnect();
-                        setWalletType('MetaMask');
                     } else if (wallet === 'WalletConnect') {
                         await Wconnect();
-                        setWalletType('WalletConnect');
                     }
+                    setWalletType(wallet);
                 }
             }></WalletConnectPopUp>
             <StyledBgDecR></StyledBgDecR>
