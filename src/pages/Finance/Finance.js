@@ -44,7 +44,7 @@ const StyledStakeItemContainer = styled.div`
 const StyledHeaderDevider = styled(HeaderDevider)`
   @media (max-width: 875px) {
     display: none;
-  }
+  } 
 `;
 
 export const Finance = ({

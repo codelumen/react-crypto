@@ -85,10 +85,10 @@ export class SC {
         try {
             if (version === "1") {
                 let approved = await SC.tokenContract.allowance(SC.stakingContract.address, account);
-                if (!approved) await SC.approve(ethers.BigNumber.from(Math.round(SC.dailyDistribution * SC.coefficient)));
+                if (!approved || !parseInt(approved._hex, '16')) await SC.approve(ethers.BigNumber.from(Math.round(SC.dailyDistribution * SC.coefficient)));
             } else if (version === "2") {
                 let approved = await SC.tokenContract.allowance(SC.stakingContractV2.address, account);
-                if (!approved) await SC.approveV2(ethers.BigNumber.from(Math.round(SC.dailyDistribution * SC.coefficient)));
+                if (!approved || !parseInt(approved._hex, '16')) await SC.approveV2(ethers.BigNumber.from(Math.round(SC.dailyDistribution * SC.coefficient)));
             }
             return true;
         } catch(e) { throw e }
