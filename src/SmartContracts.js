@@ -77,6 +77,7 @@ export class SC {
     static config = {
         mainChainId: 56,
         tokenContractAddress: '0xDc3541806D651eC79bA8639a1b495ACf503eB2Dd',
+        /* testnet approve */ _tokenContractAddress: '0xf8c5b21cf02a5429ae188901d3a73956b9ac9e2d',
         stakingContractAddress: '0xaA03e1110de1515976fAEEA19817dA81AfA44dbE',
         _stakingContractAddress: '0xa21523313855C0682D549ef2E9F688Ba0ee92273',
         stakingContractV2Address: '0x6CCF448bAE762431B2Bae046b85fD730313Cbef3',
@@ -264,7 +265,7 @@ export class SC {
         const contract = SC.stakingContractV2;
         
         try {
-            let totalRewards = await V2_getUnlockedReward(account, 11);
+            let totalRewards = await V2_getUnlockedReward(account, 11, 267840);
             return totalRewards;
         } catch(e) { throw e }
     }
