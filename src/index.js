@@ -11,16 +11,15 @@ import './polyfill';
 import { Buffer } from 'buffer';
 import { WalletConnect } from "./hooks/WalletConnect";
 
-
-const getLibrary = (provider, connector) => {
-    return new Web3(provider)
-}
-
 /**
  * Clears the local storage from previous sessions.
  */
 window.onload = () => {
     localStorage.clear();
+}
+
+const getLibrary = (provider, connector) => {
+    return new Web3(provider)
 }
 
 ReactDOM.render(
