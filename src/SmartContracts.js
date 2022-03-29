@@ -100,7 +100,7 @@ export class SC {
         const contract = SC.tokenContract;
 
         try {
-            let approvedRaw = await contract.allowance(SC.stakingContract.address, account);
+            let approvedRaw = await contract.allowance(account, SC.stakingContract.address);
             console.log('APPROVED_VALUE', approvedRaw);
             if (approvedRaw) {
                 let approved = parseInt(approvedRaw._hex, '16');
@@ -114,7 +114,7 @@ export class SC {
         const contract = SC.tokenContract;
 
         try {
-            let approvedRaw = await contract.allowance(SC.stakingContractV2.address, account);
+            let approvedRaw = await contract.allowance(account, SC.stakingContractV2.address);
             console.log('APPROVED_VALUE', approvedRaw);
             if (approvedRaw) {
                 let approved = parseInt(approvedRaw._hex, '16');
