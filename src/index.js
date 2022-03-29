@@ -16,6 +16,12 @@ const getLibrary = (provider, connector) => {
     return new Web3(provider)
 }
 
+/**
+ * Clears the local storage from previous sessions.
+ */
+window.onload = () => {
+    localStorage.clear();
+}
 
 ReactDOM.render(
     <React.StrictMode>
