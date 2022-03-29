@@ -20,7 +20,7 @@ async function V2_getAvialableRewardById(account, id, shiftTime = 0) {
     const contract = SC.stakingContractV2;
   
     try {
-      return await contract.calcRewardByIndex(account, bigNumberValue, ethers.BigNumber.from(shiftTime));
+        return await contract.calcRewardByIndex(account, bigNumberValue, ethers.BigNumber.from(shiftTime));
     } catch (err) { throw err }
 }
 
@@ -265,8 +265,12 @@ export class SC {
         const contract = SC.stakingContractV2;
         
         try {
-            let totalRewards = await V2_getUnlockedReward(account, 11, 267840);
-            return totalRewards;
+            let totalRewards = ethers.BigNumber.from(0);
+            for (let i = 0; i < 11; i++) {
+                const { reward } = await contract.calcRewardByIndex(account, ethers.BigNumber.from(i.toString()), ethers.BigNumber.from(0));
+                totalRewards = totalRewards.add(reward.toString());
+            }
+            return totalRewards.toNumber();
         } catch(e) { throw e }
     }
 }
