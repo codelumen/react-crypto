@@ -150,7 +150,6 @@ function App() {
     let [ account, setAccount ] = useState(false);
     let [ active, setActive ] = useState(false);
     let [ stakingVersion, setStakingVersion ] = useState("1");
-    let [ provider, setProvider ] = useState(null);
     let [ walletType, setWalletType ] = useState(null);
 
     let [ update, setUpdate ] = useState(false);
@@ -159,12 +158,9 @@ function App() {
         if (walletType === 'MetaMask') {
             setAccount(Maccount);
             setNeedToApprove(true);
-            setProvider(window.ethereum);
-            console.log('eth');
         } else if (walletType === 'WalletConnect') {
             setAccount(Waccount);
             setNeedToApprove(true);
-            setProvider(walletConnectProvider);
         }
     }
 
@@ -196,8 +192,10 @@ function App() {
                 async wallet => {
                     if (wallet === 'MetaMask') {
                         await Mconnect();
+                        await SC.init(window.ethereum);
                     } else if (wallet === 'WalletConnect') {
                         await Wconnect();
+                        await SC.init(walletConnectProvider);
                     }
                     setWalletType(wallet);
                 }
@@ -214,7 +212,6 @@ function App() {
                     onStake={ () => { setStakePopUpVisibility(true); setStakingVersion("1") } }
                     onStakeV2={ () => { setStakePopUpVisibility(true); setStakingVersion("2") } }
                     needToApprove={ needToApprove }
-                    provider={ provider }
                 />
             </StyledAppContainer>
             <div>

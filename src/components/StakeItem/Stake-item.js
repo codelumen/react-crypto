@@ -214,20 +214,32 @@ export const StakeItem = ({
     }, [ account, version, inStake ]);
 
     const approve = useCallback(async () => {
-        let approval = await SC.init(provider, version, account);
+        let approval;
+        if (version === "1") {
+            approval = await SC.approve();
+        } else if (version === "2") {
+            approval = await SC.approveV2();
+        }
 
         setApproved(approval);
 
         updateData();
-    }, [ version, account, updateData, provider ]);
+    }, [ version, updateData ]);
 
     useEffect(() => {
         (async () => {
+            if (account && !approved) {
+                if (version === "1") {
+                    if (await SC.allowance(account)) return setApproved(true);
+                } else if (version === "2") {
+                    if (await SC.allowanceV2(account)) return setApproved(true);
+                }
+            }
             if (!initialized && approved) {
                 if (version === "1") {
-                  setAPR(await SC.APR());
+                    setAPR(await SC.APR());
                 } else if (version === "2") {
-                  setAPR(await SC.APRV2());
+                    setAPR(await SC.APRV2());
                 }
                 setInitialized(true);
                 setInterval(() => {
@@ -300,7 +312,7 @@ export const StakeItem = ({
                 </StyledStakeItemButton>
             </StyledStakeItemRowWithButton>
             <StyledStakeItemRowWithButton>
-                <StyledStakeItemButton onClick={ needToApprove ? approve : handleUseConnection } activeButton={ !approved } style={{ width: '100%' }}>
+                <StyledStakeItemButton onClick={ needToApprove ? (!approved ? approve : () => {}) : handleUseConnection } activeButton={ !approved } style={{ width: '100%' }}>
                     { needToApprove ? (approved ? 'Approved' : 'Approve') : 'Connect Wallet' }
                     <img src={WithdrawIcon} alt="" />
                 </StyledStakeItemButton>

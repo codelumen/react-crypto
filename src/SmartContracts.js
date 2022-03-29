@@ -39,6 +39,19 @@ async function V2_getTotalRewardsValue(account, shiftTime = 0) {
     } catch (err) { throw err }
 }
 
+async function V2_getUnlockedReward(account, count, shiftTime = 0) {
+    let totalRewards = ethers.BigNumber.from(0);
+  
+    try {
+        for (let i = 0; i < count; i++) {
+            const { reward } = await V2_getAvialableRewardById(account, i, shiftTime);
+            totalRewards = totalRewards.add(reward.toString());
+        }
+
+        return totalRewards.toString();
+    } catch (err) { throw err }
+}
+
 async function V2_getAllStakesData(account) {
     const stakes = [];
 
@@ -73,7 +86,7 @@ export class SC {
     static inStake = 0;
     static inStakeV2 = 0;
 
-    static async init(_provider, version, account) {
+    static async init(_provider) {
         const provider = new ethers.providers.Web3Provider(_provider), signer = provider.getSigner();
 
         if (!SC.tokenContract) {
@@ -81,31 +94,38 @@ export class SC {
             SC.stakingContract = new ethers.Contract(SC.config.stakingContractAddress, stakingABI, signer);
             SC.stakingContractV2 = new ethers.Contract(SC.config.stakingContractV2Address, stakingV2ABI, signer);
         }
+    }
+
+    static async allowance(account) {
+        const contract = SC.tokenContract;
 
         try {
-            if (version === "1") {
-                let approvedRaw = await SC.tokenContract.allowance(SC.stakingContract.address, account);
-                console.log('APPROVED_VALUE', approvedRaw);
-                if (approvedRaw) {
-                    let approved = parseInt(approvedRaw._hex, '16');
-                    if (approved) return true;
-                }
-                await SC.approve(ethers.BigNumber.from(1000000000000000000000000000n));
-            } else if (version === "2") {
-                let approvedRaw = await SC.tokenContract.allowance(SC.stakingContractV2.address, account);
-                console.log('APPROVED_VALUE', approvedRaw);
-                if (approvedRaw) {
-                    let approved = parseInt(approvedRaw._hex, '16');
-                    if (approved) return true;
-                }
-                await SC.approveV2(ethers.BigNumber.from(1000000000000000000000000000n));
+            let approvedRaw = await contract.allowance(SC.stakingContract.address, account);
+            console.log('APPROVED_VALUE', approvedRaw);
+            if (approvedRaw) {
+                let approved = parseInt(approvedRaw._hex, '16');
+                if (approved) return true;
             }
-            return true;
+            return false;
         } catch(e) { throw e }
     }
 
-    static async approve(value) {
-        const bigNumberValue = ethers.utils.parseEther(value.toString());
+    static async allowanceV2(account) {
+        const contract = SC.tokenContract;
+
+        try {
+            let approvedRaw = await contract.allowance(SC.stakingContractV2.address, account);
+            console.log('APPROVED_VALUE', approvedRaw);
+            if (approvedRaw) {
+                let approved = parseInt(approvedRaw._hex, '16');
+                if (approved) return true;
+            }
+            return false;
+        } catch(e) { throw e }
+    }
+
+    static async approve() {
+        const bigNumberValue = ethers.utils.parseEther((1000000000000000000000000000n).toString());
         const contract = SC.tokenContract;
     
         try {
@@ -114,8 +134,8 @@ export class SC {
         } catch (e) { throw e }
     }
 
-    static async approveV2(value) {
-        const bigNumberValue = ethers.utils.parseEther(value.toString());
+    static async approveV2() {
+        const bigNumberValue = ethers.utils.parseEther((1000000000000000000000000000n).toString());
         const contract = SC.tokenContract;
     
         try {
@@ -243,8 +263,8 @@ export class SC {
         const contract = SC.stakingContractV2;
         
         try {
-            let totalRewards = await V2_getTotalRewardsValue(account, 2678400);
-            return Math.trunc(((totalRewards / (10 ** 18)) * 100) / 100);
+            let totalRewards = await V2_getUnlockedReward(account, 11);
+            return totalRewards;
         } catch(e) { throw e }
     }
 }
