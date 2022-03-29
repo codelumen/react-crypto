@@ -77,7 +77,8 @@ export class SC {
     static config = {
         mainChainId: 56,
         tokenContractAddress: '0xDc3541806D651eC79bA8639a1b495ACf503eB2Dd',
-        stakingContractAddress: '0xa21523313855C0682D549ef2E9F688Ba0ee92273',
+        stakingContractAddress: '0xaA03e1110de1515976fAEEA19817dA81AfA44dbE',
+        _stakingContractAddress: '0xa21523313855C0682D549ef2E9F688Ba0ee92273',
         stakingContractV2Address: '0x6CCF448bAE762431B2Bae046b85fD730313Cbef3',
         mainWallet: '0x8B4754ae99F1e595481029c6835C6931442f5f02',
         timestamp: 1648163253
